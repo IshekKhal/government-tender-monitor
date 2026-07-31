@@ -1,0 +1,58 @@
+{
+  "actorSpecification": 1,
+
+  "fields": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string", "title": "Title" },
+      "buyer": { "type": "string", "title": "Buyer" },
+      "country": { "type": "string", "title": "Country" },
+      "region": { "type": "string", "title": "Region" },
+      "publishedDate": { "type": "string", "format": "date-time", "title": "Published" },
+      "deadline": { "type": "string", "format": "date-time", "title": "Deadline" },
+      "budgetUsd": { "type": "number", "title": "Budget (USD)" },
+      "currency": { "type": "string", "title": "Currency" },
+      "confidenceScore": { "type": "number", "title": "Relevance" },
+      "keywordsMatched": { "type": "array", "title": "Matched Keywords" },
+      "sourceUrl": { "type": "string", "title": "Official Notice" }
+    },
+    "required": ["title"]
+  },
+
+  "views": {
+    "overview": {
+      "title": "Tenders",
+      "transformation": {
+        "fields": [
+          "title",
+          "buyer",
+          "country",
+          "region",
+          "publishedDate",
+          "deadline",
+          "budgetUsd",
+          "currency",
+          "confidenceScore",
+          "keywordsMatched",
+          "sourceUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": { "label": "Title", "format": "text" },
+          "buyer": { "label": "Buyer", "format": "text" },
+          "country": { "label": "Country" },
+          "region": { "label": "Region" },
+          "publishedDate": { "label": "Published", "format": "date" },
+          "deadline": { "label": "Deadline", "format": "date" },
+          "budgetUsd": { "label": "Budget (USD)", "format": "number" },
+          "currency": { "label": "Currency" },
+          "confidenceScore": { "label": "Relevance", "format": "number" },
+          "keywordsMatched": { "label": "Matched Keywords", "format": "array" },
+          "sourceUrl": { "label": "Open Notice", "format": "link" }
+        }
+      }
+    }
+  }
+}

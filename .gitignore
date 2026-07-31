@@ -1,0 +1,13 @@
+node_modules/
+storage/
+apify_storage/
+.env
+.idea/
+.vscode/
+*.log
+.DS_Store
+
+# Added by Apify CLI
+storage
+node_modules
+.venv

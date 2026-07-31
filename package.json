@@ -1,0 +1,26 @@
+{
+  "name": "global-tender-monitor",
+  "version": "2.0.0",
+  "description": "Reads a Notion capability profile, monitors SAM.gov and UK Contracts Finder, scores contracts against that profile, and writes new qualifying opportunities back to Notion via an Apify MCP connector.",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "discover": "node tools/discover-tools.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "apify": "^3.7.2",
+    "crawlee": "^3.11.0",
+    "got-scraping": "^4.0.0",
+    "cheerio": "^1.2.0",
+    "dayjs": "^1.11.10",
+    "xml2js": "^0.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Abhishek Khanra (ishekofficial)",
+  "license": "ISC"
+}

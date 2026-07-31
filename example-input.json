@@ -1,0 +1,19 @@
+{
+    "keywords": [
+        "software",
+        "ai",
+        "education"
+    ],
+    "excludeKeywords": [],
+    "countries": [
+        "UK",
+        "USA",
+        "Germany"
+    ],
+    "minimumBudget": 10000,
+    "deadlineWithinDays": 45,
+    "maxResultsPerSource": 200,
+    "includeExpired": false,
+    "notifyWebhook": null,
+    "notifyEmail": null
+}
