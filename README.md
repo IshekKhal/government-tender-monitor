@@ -54,13 +54,13 @@ In Apify Console → **Settings → MCP connectors → Add connector** → enter
 
 ## What it looks like
 
-<!-- SCREENSHOT 1: Notion Capability Profile database with ~12 rows -->
+![Capability profile in Notion](https://raw.githubusercontent.com/IshekKhal/government-tender-monitor/main/assets/capability-profile.png)
 *Your capability profile in Notion. This is the only place you configure what to search for.*
 
-<!-- SCREENSHOT 2: Notion Contract Pipeline populated with contracts -->
+![Contract pipeline in Notion](https://raw.githubusercontent.com/IshekKhal/government-tender-monitor/main/assets/contract-pipeline.png)
 *Qualified contracts delivered to your pipeline, scored and explained.*
 
-<!-- SCREENSHOT 3: Apify Console input form showing the connector pickers -->
+![Apify Console input](https://raw.githubusercontent.com/IshekKhal/government-tender-monitor/main/assets/console-input.png)
 *One-click Notion authorization. No API keys.*
 
 ## Output

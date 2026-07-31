@@ -257,10 +257,18 @@ try {
             .toLowerCase()
             .trim()}`;
 
+    // Two distinct kinds of duplicate, counted separately because they prove
+    // different things. Cross-run duplicates are the ones only a connector that
+    // READS can catch. Within-run duplicates are SAM.gov reissuing the same
+    // opportunity under a new notice ID inside a single batch.
+    let crossRunDupes = 0;
+    let withinRunDupes = 0;
+
     for (const t of processed) {
         if (alreadyReported.has(String(t.rawSourceId))) {
             t.skippedAsDuplicate = true;
             duplicates.push(t);
+            crossRunDupes += 1;
             continue;
         }
 
@@ -268,7 +276,7 @@ try {
         if (seenThisRun.has(fp)) {
             t.skippedAsDuplicate = true;
             duplicates.push(t);
-            log.debug(`Within-run duplicate suppressed: ${t.title?.slice(0, 60)}`);
+            withinRunDupes += 1;
             continue;
         }
         seenThisRun.add(fp);
@@ -279,17 +287,23 @@ try {
     }
 
     log.info(
-        `${duplicates.length} already in pipeline (skipped), ` +
-            `${candidates.length} new contract(s) at or above score ${minimumScore}.`,
+        `${crossRunDupes} already in your pipeline from a previous run, ` +
+            `${withinRunDupes} repeated within this batch, ` +
+            `${candidates.length} new at or above score ${minimumScore}.`,
     );
 
-    // This is the line that answers "what did the connector get you that a manual
-    // step couldn't". A write-only Actor on a daily schedule would have inserted
-    // all of these again.
-    if (duplicates.length > 0) {
+    // The claim the article rests on, stated only when it is actually true.
+    if (crossRunDupes > 0) {
         log.info(
-            `Duplicate suppression saved ${duplicates.length} redundant row(s) this run. ` +
-                'A write-only Actor would have re-inserted every one of them.',
+            `Cross-run deduplication saved ${crossRunDupes} redundant row(s). ` +
+                'A write-only Actor would have re-inserted every one of them, ' +
+                'and again tomorrow, and again the day after.',
+        );
+    }
+    if (withinRunDupes > 0) {
+        log.info(
+            `Within-run deduplication saved ${withinRunDupes} row(s) where the source ` +
+                'reissued the same opportunity under a new notice ID.',
         );
     }
 
@@ -361,6 +375,8 @@ try {
         rankingPositionsChanged: rankChanged,
         biggestProfileGain: best?.profileContribution ?? 0,
         duplicatesSuppressed: duplicates.length,
+        crossRunDuplicates: crossRunDupes,
+        withinRunDuplicates: withinRunDupes,
         newAboveThreshold: candidates.length,
         written: writeResult.written.length,
         writeFailures: writeResult.failed.length,
