@@ -5,18 +5,13 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
-    "discover": "node tools/discover-tools.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "apify": "^3.7.2",
-    "crawlee": "^3.11.0",
     "got-scraping": "^4.0.0",
-    "cheerio": "^1.2.0",
-    "dayjs": "^1.11.10",
-    "xml2js": "^0.6.2"
+    "dayjs": "^1.11.10"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -27,6 +27,7 @@ import * as samOfficial from './src/sources/us_sam_official.js';
 import * as ukSource from './src/sources/uk_contracts.js';
 
 import { connectToConnector, closeAll } from './src/connectors/mcpClient.js';
+import { runDiscovery } from './src/connectors/discovery.js';
 import {
     assertReadCapability,
     readCapabilityProfile,
@@ -49,6 +50,15 @@ let pipelineClient = null;
 
 try {
     const input = (await Actor.getInput()) || {};
+
+    // Discovery is a run mode, not a separate entry point. Selecting it in the
+    // input beats editing package.json and pushing a second build, which is what
+    // this used to require.
+    if (input.runMode === 'discover') {
+        await runDiscovery(input);
+        await Actor.exit();
+    }
+
     const {
         capabilityConnector,
         pipelineConnector,

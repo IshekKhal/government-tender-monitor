@@ -35,6 +35,13 @@
                 }
             ]
         },
+        "runMode": {
+            "title": "Run mode",
+            "type": "string",
+            "description": "Leave as 'analyse'. Set to 'discover' only when connecting a new MCP server for the first time: it prints every tool the connector exposes with its annotations and input schema, then exits without scraping anything.",
+            "editor": "hidden",
+            "default": "analyse"
+        },
         "capabilityDatabaseId": {
             "title": "Capability profile database ID",
             "type": "string",

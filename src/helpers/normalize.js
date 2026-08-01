@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
-import { load } from 'cheerio';
-
-// Approximate static exchange rates to USD (Base: USD)
-// In a real production app, fetch these dynamically.
+// Approximate static exchange rates to USD.
+//
+// Deliberate v1 tradeoff: good enough to filter by budget without adding a
+// runtime dependency on a currency API. Not good enough for financial analysis,
+// and the README says so.
 const EXCHANGE_RATES = {
     USD: 1,
     EUR: 1.09,
@@ -14,57 +14,19 @@ const EXCHANGE_RATES = {
 
 /**
  * Normalizes a currency amount to USD.
- * @param {number} amount - The amount in original currency.
- * @param {string} currency - The currency code (e.g., 'EUR').
- * @returns {number|null} - The estimated amount in USD, or null if invalid.
+ *
+ * Returns null rather than the original amount when the currency is unknown.
+ * A number in an unknown currency compared against a USD threshold is worse
+ * than no number at all, because it silently passes or fails the filter.
+ *
+ * @param {number} amount - The amount in the original currency.
+ * @param {string} currency - The currency code, for example 'EUR'.
+ * @returns {number|null} - Estimated USD amount, or null if not convertible.
  */
 export function normalizeCurrencyToUsd(amount, currency) {
-    if (!amount || isNaN(amount)) return null;
-    if (!currency) return amount; // Assume USD if missing? Or return raw. Let's return raw if unknown.
+    if (!amount || Number.isNaN(Number(amount))) return null;
+    if (!currency) return amount;
 
-    const code = currency.toUpperCase().trim();
-    const rate = EXCHANGE_RATES[code];
-
-    if (rate) {
-        return Math.round(amount * rate);
-    }
-    
-    // If currency not found, return null or original? 
-    // Spec says "approximate is acceptable". 
-    // If we can't convert, we can't filter by budget reliably.
-    return null; 
-}
-
-/**
- * Strips HTML tags from a string.
- * @param {string} html - The HTML string.
- * @returns {string} - Plain text.
- */
-export function stripHtml(html) {
-    if (!html) return '';
-    const $ = load(html);
-    return $.text().trim().replace(/\s+/g, ' ');
-}
-
-/**
- * Formats a date string to ISO 8601.
- * @param {string|Date} date - The date to format.
- * @returns {string|null} - ISO string or null.
- */
-export function formatDate(date) {
-    if (!date) return null;
-    const d = dayjs(date);
-    return d.isValid() ? d.toISOString() : null;
-}
-
-/**
- * Calculates days remaining until deadline.
- * @param {string} deadlineIso - ISO formatted deadline.
- * @returns {number|null} - Days remaining (can be negative if expired).
- */
-export function getDaysRemaining(deadlineIso) {
-    if (!deadlineIso) return null;
-    const now = dayjs();
-    const end = dayjs(deadlineIso);
-    return end.diff(now, 'day');
+    const rate = EXCHANGE_RATES[currency.toUpperCase().trim()];
+    return rate ? Math.round(amount * rate) : null;
 }
