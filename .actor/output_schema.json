@@ -1,0 +1,18 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Global Government Tender Monitor Output",
+  "properties": {
+    "tenders": {
+      "type": "string",
+      "title": "Discovered Contracts Dataset",
+      "description": "Dataset containing all scraped, normalized, and scored government contract opportunities.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "runSummary": {
+      "type": "string",
+      "title": "Execution Summary",
+      "description": "Summary statistics of tenders fetched, scored, deduplicated, and written to Notion.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/RUN_SUMMARY"
+    }
+  }
+}

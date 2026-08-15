@@ -1,12 +1,13 @@
 {
-	"actorSpecification": 1,
-	"name": "goverment-contract-monitor",
-	"title": "Global Government Tender Monitor & Notion Pipeline",
-	"version": "2.0",
-	"buildTag": "latest",
-	"input": "../INPUT_SCHEMA.json",
-	"environmentVariables": {},
-	"storages": {
-		"dataset": "./dataset_schema.json"
-	}
+  "actorSpecification": 1,
+  "name": "goverment-contract-monitor",
+  "title": "Global Government Tender Monitor & Notion Pipeline",
+  "version": "2.0",
+  "buildTag": "latest",
+  "input": "../INPUT_SCHEMA.json",
+  "output": "./output_schema.json",
+  "environmentVariables": {},
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
 }
